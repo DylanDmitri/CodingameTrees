@@ -1,14 +1,14 @@
-from game.Cell import Cell
-from game.Constants import Constants
-from game.Config import Config
-from game.CubeCoord import CubeCoord
+from Cell import Cell
+from Constants import Constants
+from Config import Config
+from CubeCoord import CubeCoord
 
 import random
 
 class Board:
 
    def __init__(self, seed):
-      self.tiles = {}  # coord -> Cell
+      self.map = {}  # coord -> Cell
       self.index = 0
 
       if seed:
@@ -16,7 +16,7 @@ class Board:
       self.generate()
 
    def generateCell(self, coord, richness):
-      self.tiles[coord] = Cell(self.index, richness)
+      self.map[coord] = Cell(self.index, richness)
       self.index += 1
 
    def generate(self):
@@ -40,18 +40,18 @@ class Board:
          coord = coord.neighbor(0)
 
       # add random holes
-      coordList = list(self.board.keys())
+      coordList = list(self.map.keys())
       wantedEmptyCells = random.randint(1, Config.MAX_EMPTY_CELLS) if Config.HOLES_ENABLED else 0
       actualEmptyCells = 0
 
       while actualEmptyCells < wantedEmptyCells-1:
          randCord = random.choice(coordList)
 
-         if self.board[randCord].richness == Constants.RICHNESS_NULL:
+         if self.map[randCord].richness == Constants.RICHNESS_NULL:
             continue
 
-         self.board[randCord].richness = Constants.RICHNESS_NULL
-         self.board[randCord.getOpposite()].richness = Constants.RICHNESS_NULL
+         self.map[randCord].richness = Constants.RICHNESS_NULL
+         self.map[randCord.getOpposite()].richness = Constants.RICHNESS_NULL
          actualEmptyCells += 1 if randCord is center else 2
 
 

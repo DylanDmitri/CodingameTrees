@@ -2,7 +2,7 @@
 class Cell:
    def __init__(self, index, richness):
       self.index = index
-      self.richess = richness
+      self.richness = richness
       self.valid = True
 
 class NullCell(Cell):

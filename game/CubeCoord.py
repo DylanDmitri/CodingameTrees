@@ -15,13 +15,16 @@ class CubeCoord:
 
    def __hash__(self):
       result = 1
-      result = 31*result + x
-      result = 31*result + y
-      result = 31*result + z
+      result = 31*result + self.x
+      result = 31*result + self.y
+      result = 31*result + self.z
       return result
 
    def __eq__(self, other):
       return (self.x==other.x) and (self.y==other.y) and (self.z==other.z)
+   
+   def __add__(self, other):
+      return CubeCoord(self.x+other.x, self.y+other.y, self.z+other.z)
    
    def neighbor(self, orientation, distance=1):
       return CubeCoord(
@@ -34,6 +37,9 @@ class CubeCoord:
       return (abs(self.x-dst.x) + abs(self.y-dst.y) + abs(self.z-dst.z)) / 2
 
    def __str__(self):
+      return f'<{self.x}, {self.y}, {self.z}>'
+
+   def __repr__(self):
       return f'<{self.x}, {self.y}, {self.z}>'
 
    def getOpposite(self):
